@@ -2,7 +2,6 @@
 const fs = require('fs');
 const path = require('path');
 const way = path.resolve('04-copy-directory', 'files-copy');
-const copyWay = path.resolve('04-copy-directory', 'files');
 const fsPromise = require('fs/promises');
 
 fs.mkdir(way, { recursive: true }, error => {
@@ -29,10 +28,12 @@ async function copyFilesFromDirectory() {
       deleteFile(`04-copy-directory/files-copy/${copy.name}`);
     }
 
-    const item = await fsPromise.readdir('04-copy-directory/files', { withFileTypes: true });
-    for (const items of item) {
-      if (items.isFile()) {
-        fs.copyFile(`04-copy-directory/files/${items.name}`, `04-copy-directory/files-copy/${items.name}`, (error) => {
+    const sourceFiles = await fsPromise.readdir('04-copy-directory/files', { withFileTypes: true });
+    for (const file of sourceFiles) {
+      if (file.isFile()) {
+        fs.copyFile(`04-copy-directory/files/${file.name}`,
+                    `04-copy-directory/files-copy/${file.name}`,
+                    (error) => {
           if (error) {
             console.log('Error Found:', error);
           }
