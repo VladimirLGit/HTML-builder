@@ -20,7 +20,6 @@ const deleteFile = (fileName) => {
 }
 
 async function copyFilesFromDirectory() {
-
   try {
     const copyFiles = await fsPromise.readdir('04-copy-directory/files-copy', { withFileTypes: true });
     console.log(copyFiles);
@@ -43,7 +42,6 @@ async function copyFilesFromDirectory() {
   } catch (error) {
     console.log((error));
   }
-
 }
 
 copyFilesFromDirectory();
