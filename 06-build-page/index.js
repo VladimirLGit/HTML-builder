@@ -47,9 +47,11 @@ const deleteFile = (fileName) => {
 async function copyFilesFromDirectory(sourceDirectory, destDirectory) {
   try {
     const copyFiles = await fsPromise.readdir(destDirectory, { withFileTypes: true });
-    console.log(copyFiles);
+    //console.log(copyFiles);
     for (let copy of copyFiles) {
-      deleteFile(`${destDirectory}/${copy.name}`);
+      if (copy.isFile()) {
+        deleteFile(`${destDirectory}/${copy.name}`);
+      }
     }
 
     const sourceFiles = await fsPromise.readdir(`${sourceDirectory}`, { withFileTypes: true });
